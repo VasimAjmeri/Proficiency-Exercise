@@ -17,6 +17,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     let API_URL         = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
     
     var responseData    = Data()
+    var homeListData    = [HomeItem]()
 
     
 //MARK: VIEW DELEGATES METHODS
@@ -26,6 +27,8 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //setup tablview row height
         self.configTableView()
+        
+        //fetch data from server
         self.fetchDataFromAPI()
     }
     
@@ -34,12 +37,22 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.tblViewHome.rowHeight          = UITableViewAutomaticDimension
     }
     
+    func setupNavigationTitle(_ title:String){
+        self.title = title
+    }
+    
+    func reloadTableView(){
+        DispatchQueue.main.async {//reload tablview on main thread
+            self.tblViewHome.reloadData()
+        }
+    }
+    
     
 //MARK: FETCH DATA FROM API
     
     func fetchDataFromAPI(){
         
-        let dataUrl        = URL.init(string: self.API_URL)
+        let dataUrl = URL.init(string: self.API_URL)//API URL
         
         if let dataUrl = dataUrl{//fetch optional value of url
             let dataRequest    = URLRequest.init(url: dataUrl)
@@ -70,7 +83,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //convert data response into ISO latin
         let responseEncode = String(data: self.responseData, encoding: .isoLatin1)
         
-        //encode ISO latin to UT8
+        //string ISO latin to UT8 data
         guard let responseDataUTF8 = responseEncode?.data(using: .utf8) else {
             print("could not convert data to UTF-8 format")
             return
@@ -78,10 +91,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //parse data to json
         do {
-            let jsonData = try JSONSerialization.jsonObject(with: responseDataUTF8) as? [String : Any]
+            let jsonData = try JSONDecoder().decode(HomeData.self, from: responseDataUTF8)
             
-            if let jsonData = jsonData{
-                print(jsonData)//parsed data
+            if let strNavigationTitle =  jsonData.title {
+                self.homeListData = jsonData.rows//all related data
+                self.setupNavigationTitle(strNavigationTitle)//setup navigation title
+                self.reloadTableView()//reload tableview data
             }
             
         } catch let jsonError {
@@ -93,10 +108,17 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
 //MARK: TABLEVIEW DELEGATE METHODS
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.homeListData.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        let homeItem = self.homeListData[indexPath.row]
+        
+        if homeItem.title == nil && homeItem.description == nil && homeItem.imageHref == nil{
+            return 0.0
+        }
+        
         return UITableViewAutomaticDimension
     }
     
@@ -112,15 +134,35 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIRE, for: indexPath) as! HomeViewCell
         
-        cell.lblTitle.text       = "My Title"
-        cell.lblDescription.text = "My Description"
-        cell.imgView.image       = UIImage.init(named: "placeholder")
+        let homeItem = self.homeListData[indexPath.row]
+        
+        //title for the cell
+        if let title = homeItem.title{
+            cell.lblTitle.text = title
+        }else{
+            cell.lblTitle.text = ""
+        }
+        
+        //description for the cell
+        if let description = homeItem.description{
+            cell.lblDescription.text = description
+        }else{
+            cell.lblDescription.text = ""
+        }
+        
+        //image for the cell
+        if let imageLink = homeItem.imageHref{
+            cell.setImageForCell(imageLink)
+        }else{
+            cell.imgView.image = nil
+        }
+        cell.selectionStyle = .none
         
         return cell
     }
     
-    
-    
+
     
 
 }
+

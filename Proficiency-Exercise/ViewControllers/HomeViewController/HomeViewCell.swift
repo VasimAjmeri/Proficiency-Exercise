@@ -16,13 +16,6 @@ class HomeViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     
     
-// download image
-    
-    func setImageForCell(_ imgUrl: String){
-        
-        self.imgView.loadImageUsingUrlString(imgUrl)
-    }
-    
     
 }
 
@@ -54,11 +47,12 @@ extension UIImageView{
                         if let image = image{
                             self.image = image
                             imageCache.setObject(image, forKey: strUrl as NSString)
+                            NotificationCenter.default.post(name: Notification.Name("reloadTable"), object: nil)
                         }else{
                             print("NO IMAGE")
                         }
                     }
-                    
+
                 }
             }.resume()
         }

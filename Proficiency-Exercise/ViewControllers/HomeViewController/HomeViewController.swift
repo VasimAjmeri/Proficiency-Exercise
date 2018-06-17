@@ -18,12 +18,16 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     var responseData    = Data()
     var homeListData    = [HomeItem]()
-
+    var imageCache      = NSCache<NSString, UIImage>()
+    var refreshControl  = UIRefreshControl()
+ 
     
 //MARK: VIEW DELEGATES METHODS
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadTableView), name: Notification.Name("reloadTable"), object: nil)
         
         //setup tablview row height
         self.configTableView()
@@ -33,6 +37,13 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func configTableView(){
+        
+        // Pull to refresh tableview
+        self.refreshControl.attributedTitle = NSAttributedString(string: "")
+        self.refreshControl.addTarget(self, action: #selector(self.fetchDataFromAPI), for: .valueChanged)
+        self.tblViewHome.addSubview(refreshControl)
+        
+        //Dynamic row height
         self.tblViewHome.estimatedRowHeight = 100
         self.tblViewHome.rowHeight          = UITableViewAutomaticDimension
     }
@@ -41,7 +52,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.title = title
     }
     
-    func reloadTableView(){
+    @objc func reloadTableView(){
         DispatchQueue.main.async {//reload tablview on main thread
             self.tblViewHome.reloadData()
         }
@@ -50,7 +61,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     
 //MARK: FETCH DATA FROM API
     
-    func fetchDataFromAPI(){
+    @objc func fetchDataFromAPI(){
         
         let dataUrl = URL.init(string: self.API_URL)//API URL
         
@@ -67,6 +78,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
     func connection(_ connection: NSURLConnection, didFailWithError error: Error) {
         //Request failed
         print(error.localizedDescription)
+        self.refreshControl.endRefreshing()
     }
     
     func connection(_ connection: NSURLConnection, didReceive response: URLResponse) {
@@ -86,6 +98,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         //string ISO latin to UT8 data
         guard let responseDataUTF8 = responseEncode?.data(using: .utf8) else {
             print("could not convert data to UTF-8 format")
+            self.refreshControl.endRefreshing()
             return
         }
         
@@ -97,10 +110,12 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
                 self.homeListData = jsonData.rows//all related data
                 self.setupNavigationTitle(strNavigationTitle)//setup navigation title
                 self.reloadTableView()//reload tableview data
+                self.refreshControl.endRefreshing()
             }
             
         } catch let jsonError {
             print(jsonError)
+            self.refreshControl.endRefreshing()
         }
 
     }
@@ -152,7 +167,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //image for the cell
         if let imageLink = homeItem.imageHref{
-            cell.setImageForCell(imageLink)
+            cell.imgView.loadImageUsingUrlString(imageLink)
         }else{
             cell.imgView.image = nil
         }
@@ -160,9 +175,7 @@ class HomeViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell
     }
-    
 
-    
 
 }
 

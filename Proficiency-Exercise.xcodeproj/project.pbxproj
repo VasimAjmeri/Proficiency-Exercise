@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		BD16DF9A20D62805003D99F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16DF9920D62805003D99F2 /* AppDelegate.swift */; };
-		BD16DF9C20D62805003D99F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16DF9B20D62805003D99F2 /* ViewController.swift */; };
 		BD16DF9F20D62805003D99F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD16DF9D20D62805003D99F2 /* Main.storyboard */; };
 		BD16DFA120D62806003D99F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD16DFA020D62806003D99F2 /* Assets.xcassets */; };
 		BD16DFA420D62806003D99F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BD16DFA220D62806003D99F2 /* LaunchScreen.storyboard */; };
 		BD16DFAF20D62807003D99F2 /* Proficiency_ExerciseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16DFAE20D62807003D99F2 /* Proficiency_ExerciseTests.swift */; };
 		BD16DFBA20D62807003D99F2 /* Proficiency_ExerciseUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD16DFB920D62807003D99F2 /* Proficiency_ExerciseUITests.swift */; };
+		BDD1F98820D6347400FE7B12 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1F98720D6347400FE7B12 /* HomeViewController.swift */; };
+		BDD1F98A20D6351A00FE7B12 /* HomeViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD1F98920D6351A00FE7B12 /* HomeViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,7 +37,6 @@
 /* Begin PBXFileReference section */
 		BD16DF9620D62805003D99F2 /* Proficiency-Exercise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Proficiency-Exercise.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD16DF9920D62805003D99F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		BD16DF9B20D62805003D99F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		BD16DF9E20D62805003D99F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BD16DFA020D62806003D99F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BD16DFA320D62806003D99F2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -47,6 +47,8 @@
 		BD16DFB520D62807003D99F2 /* Proficiency-ExerciseUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Proficiency-ExerciseUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BD16DFB920D62807003D99F2 /* Proficiency_ExerciseUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Proficiency_ExerciseUITests.swift; sourceTree = "<group>"; };
 		BD16DFBB20D62807003D99F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BDD1F98720D6347400FE7B12 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		BDD1F98920D6351A00FE7B12 /* HomeViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,10 +100,10 @@
 			isa = PBXGroup;
 			children = (
 				BD16DF9920D62805003D99F2 /* AppDelegate.swift */,
-				BD16DF9B20D62805003D99F2 /* ViewController.swift */,
 				BD16DF9D20D62805003D99F2 /* Main.storyboard */,
-				BD16DFA020D62806003D99F2 /* Assets.xcassets */,
 				BD16DFA220D62806003D99F2 /* LaunchScreen.storyboard */,
+				BDD1F98B20D6387200FE7B12 /* ViewControllers */,
+				BD16DFA020D62806003D99F2 /* Assets.xcassets */,
 				BD16DFA520D62806003D99F2 /* Info.plist */,
 			);
 			path = "Proficiency-Exercise";
@@ -123,6 +125,23 @@
 				BD16DFBB20D62807003D99F2 /* Info.plist */,
 			);
 			path = "Proficiency-ExerciseUITests";
+			sourceTree = "<group>";
+		};
+		BDD1F98B20D6387200FE7B12 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BDD1F98C20D6388C00FE7B12 /* HomeViewController */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BDD1F98C20D6388C00FE7B12 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BDD1F98720D6347400FE7B12 /* HomeViewController.swift */,
+				BDD1F98920D6351A00FE7B12 /* HomeViewCell.swift */,
+			);
+			path = HomeViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -256,8 +275,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD16DF9C20D62805003D99F2 /* ViewController.swift in Sources */,
 				BD16DF9A20D62805003D99F2 /* AppDelegate.swift in Sources */,
+				BDD1F98820D6347400FE7B12 /* HomeViewController.swift in Sources */,
+				BDD1F98A20D6351A00FE7B12 /* HomeViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +383,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -417,7 +437,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -433,6 +453,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MY37VB4A3Y;
 				INFOPLIST_FILE = "Proficiency-Exercise/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -451,6 +472,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = MY37VB4A3Y;
 				INFOPLIST_FILE = "Proficiency-Exercise/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
